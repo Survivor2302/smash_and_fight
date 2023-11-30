@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -65,7 +66,8 @@ class _MyHomePageState extends State<MyHomePage> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Draggable(
-                    child: buildProposition(), feedback: buildProposition())
+                    child: buildProposition(),
+                    feedback: buildProposition()) //TODO A Bosser
               ],
             ),
             Row(
@@ -76,6 +78,35 @@ class _MyHomePageState extends State<MyHomePage> {
               ],
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  void showCross(bool accept) {
+    Widget cross = Container(
+      width: MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.height,
+      color: accept ? Colors.green : Colors.red,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          accept
+              ? Icon(Icons.favorite, size: 100)
+              : Icon(Icons.delete_forever, size: 100),
+        ],
+      ),
+    );
+
+    Timer timer = Timer(Duration(milliseconds: 550), () {
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    });
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: AnimatedContainer(
+          duration: Duration(seconds: 0),
+          child: cross,
         ),
       ),
     );
@@ -161,7 +192,18 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ),
         onPressed: () {
-          // Add your onPressed logic here
+          if (accept) {
+             setState(() {
+              showCross(true);
+              buildProposition();
+            }); //TODO IL faudra sauvegarder le robot et en générer un nouveau
+          }
+          if (!accept) {
+            setState(() {
+              showCross(false);
+              buildProposition();
+            });
+          }
         },
         child: accept
             ? Icon(Icons.favorite, color: Colors.pink, size: 24.0)
