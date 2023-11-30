@@ -103,8 +103,8 @@ class _MyHomePageState extends State<MyHomePage> {
           return CachedNetworkImage(
             imageUrl: snapshot.data!.imageUrl,
             imageBuilder: (context, imageProvider) => Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height / 2,
+              width: MediaQuery.of(context).size.width / 1.1,
+              height: MediaQuery.of(context).size.height / 1.5,
               decoration: BoxDecoration(
                 color: Theme.of(context).colorScheme.primary,
                 borderRadius: BorderRadius.circular(50),
