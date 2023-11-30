@@ -16,9 +16,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSwatch(
-          primarySwatch: Colors.deepPurple,
-        ),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
@@ -42,7 +39,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.primary,
+        backgroundColor: Colors.white70,
         title: Text(widget.title),
       ),
       body: Center(
@@ -61,6 +58,13 @@ class _MyHomePageState extends State<MyHomePage> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 buildProposition(),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                buildSwipeWidget(false),
+                buildSwipeWidget(true),
               ],
             ),
           ],
@@ -118,5 +122,24 @@ class _MyHomePageState extends State<MyHomePage> {
         }
       },
     );
+  }
+
+  Widget buildSwipeWidget(bool accept) {
+    return TextButton(
+        style: ButtonStyle(
+          elevation: MaterialStateProperty.all(8.0),
+          fixedSize: MaterialStateProperty.all<Size>(
+            Size(100, 100), // Adjust the width and height as needed
+          ),
+          backgroundColor: MaterialStateProperty.all<Color>(
+              Colors.white
+          ),
+        ),
+        onPressed: () {
+          // Add your onPressed logic here
+        },
+        child: accept
+            ? Icon(Icons.favorite, color: Colors.pink, size: 24.0)
+            : Icon(Icons.delete_forever, color: Colors.pink, size: 24.0));
   }
 }
