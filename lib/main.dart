@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:smash_and_fight/model/robot.dart';
 
 import 'utils.dart';
 
@@ -89,8 +90,8 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Widget buildProposition() {
-    return FutureBuilder<String>(
-      future: getPrenomAleatoire(),
+    return FutureBuilder<Robot>(
+      future: getRandomRobot(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return CircularProgressIndicator();
@@ -99,14 +100,11 @@ class _MyHomePageState extends State<MyHomePage> {
         } else if (!snapshot.hasData || snapshot.data == null) {
           return Text('No data available');
         } else {
-          String name = snapshot.data!;
-          String imageUrl = 'https://robohash.org/$name';
-
           return CachedNetworkImage(
-            imageUrl: imageUrl,
+            imageUrl: snapshot.data!.imageUrl,
             imageBuilder: (context, imageProvider) => Container(
-              width: 500,
-              height: 800,
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height / 2,
               decoration: BoxDecoration(
                 color: Theme.of(context).colorScheme.primary,
                 borderRadius: BorderRadius.circular(50),

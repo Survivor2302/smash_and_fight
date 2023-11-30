@@ -1,8 +1,8 @@
 import 'dart:convert';
-import 'dart:io';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:smash_and_fight/model/robot.dart';
 
 Future<String> getPrenomAleatoire() async {
   final String response =
@@ -26,4 +26,15 @@ Future<String> getRandomSentence() async {
   debugPrint(data[randomIndex]["txt"]);
 
   return data[randomIndex]["txt"];
+}
+
+Future<Robot> getRandomRobot() async {
+  String name = await getPrenomAleatoire();
+  return Robot(
+      name: name,
+      sentence: await getRandomSentence(),
+      attack: Random().nextInt(100),
+      pv: Random().nextInt(100),
+      armor: Random().nextInt(100),
+      imageUrl: 'https://robohash.org/$name');
 }
