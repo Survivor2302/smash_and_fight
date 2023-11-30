@@ -16,11 +16,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'Smash&Fight'),
     );
   }
 }
@@ -35,14 +36,18 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  late String name; // Declare the name variable
+  late String name;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(179, 238, 229, 229),
-        title: Text(widget.title),
+        title: Padding(
+          padding: const EdgeInsets.only(top: 16.0),
+          child: Center(
+            child: Image.asset('images/Logo.png', height: 50.0),
+          ),
+        ),
       ),
       body: Center(
         child: Column(
@@ -59,7 +64,8 @@ class _MyHomePageState extends State<MyHomePage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                buildProposition(),
+                Draggable(
+                    child: buildProposition(), feedback: buildProposition())
               ],
             ),
             Row(
@@ -101,18 +107,17 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Widget buildProposition() {
-  return FutureBuilder<Robot>(
-    future: getRandomRobot(),
-    builder: (context, snapshot) {
-      if (snapshot.connectionState == ConnectionState.waiting) {
-        return CircularProgressIndicator();
-      } else if (snapshot.hasError) {
-        return Text('Error: ${snapshot.error}');
-      } else if (!snapshot.hasData || snapshot.data == null) {
-        return Text('No data available');
-      } else {
-        final randomColor = Color(Random().nextInt(0xffffffff));
-
+    return FutureBuilder<Robot>(
+      future: getRandomRobot(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return CircularProgressIndicator();
+        } else if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}');
+        } else if (!snapshot.hasData || snapshot.data == null) {
+          return Text('No data available');
+        } else {
+          final randomColor = Color(Random().nextInt(0xffffffff));
 
           return CachedNetworkImage(
             imageUrl: snapshot.data!.imageUrl,
