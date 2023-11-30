@@ -137,38 +137,62 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Widget buildProposition() {
-    return FutureBuilder<Robot>(
-      future: getRandomRobot(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator();
-        } else if (snapshot.hasError) {
-          return Text('Error: ${snapshot.error}');
-        } else if (!snapshot.hasData || snapshot.data == null) {
-          return Text('No data available');
-        } else {
-          final randomColor = Color(Random().nextInt(0xffffffff));
+ Widget buildProposition() {
+  return FutureBuilder<Robot>(
+    future: getRandomRobot(),
+    builder: (context, snapshot) {
+      if (snapshot.connectionState == ConnectionState.waiting) {
+        return CircularProgressIndicator();
+      } else if (snapshot.hasError) {
+        return Text('Error: ${snapshot.error}');
+      } else if (!snapshot.hasData || snapshot.data == null) {
+        return Text('No data available');
+      } else {
+        final robot = snapshot.data!;
+        final randomColor = Color(Random().nextInt(0xffffffff));
 
-          return CachedNetworkImage(
-            imageUrl: snapshot.data!.imageUrl,
-            imageBuilder: (context, imageProvider) => Container(
-              width: MediaQuery.of(context).size.width / 1.1,
-              height: MediaQuery.of(context).size.height / 1.5,
-              decoration: BoxDecoration(
-                color: randomColor,
-                borderRadius: BorderRadius.circular(50),
-                image: DecorationImage(
-                  image: imageProvider,
-                  fit: BoxFit.cover,
+        return Container(
+          //p-e mettre un padding ici
+          child: Column(
+            children: [
+              CachedNetworkImage(
+                imageUrl: robot.imageUrl,
+                imageBuilder: (context, imageProvider) => Container(
+                  width: MediaQuery.of(context).size.width / 1.1,
+                  height: MediaQuery.of(context).size.height / 1.5,
+                  decoration: BoxDecoration(
+                    color: randomColor,
+                    borderRadius: BorderRadius.circular(50),
+                    image: DecorationImage(
+                      image: imageProvider,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
                 ),
               ),
-            ),
-          );
-        }
-      },
-    );
-  }
+              SizedBox(height: 16.0),
+              Text(
+                robot.name,
+                style: TextStyle(
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 8.0),
+              Text(
+                robot.sentence,
+                style: TextStyle(
+                  fontSize: 16.0,
+                ),
+              ),
+            ],
+          ),
+        );
+      }
+    },
+  );
+}
+
 
   Widget buildSwipeWidget(bool accept) {
     return Material(
