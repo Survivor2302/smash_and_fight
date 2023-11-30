@@ -11,8 +11,6 @@ Future<String> getPrenomAleatoire() async {
 
   int randomIndex = Random().nextInt(data.length);
 
-  debugPrint(data[randomIndex]["prenoms"]);
-
   return data[randomIndex]["prenoms"];
 }
 
@@ -22,8 +20,6 @@ Future<String> getRandomSentence() async {
   final data = await json.decode(response);
 
   int randomIndex = Random().nextInt(data.length);
-
-  debugPrint(data[randomIndex]["txt"]);
 
   return data[randomIndex]["txt"];
 }
