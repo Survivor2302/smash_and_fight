@@ -7,7 +7,7 @@ import 'package:smash_and_fight/model/robot.dart';
 import 'helper/utils.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-import 'viewModel/robotviewmodel.dart';
+import 'viewmodel/robotviewmodel.dart';
 
 void main() async {
   await Hive.initFlutter();
