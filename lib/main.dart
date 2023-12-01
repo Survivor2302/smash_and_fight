@@ -46,7 +46,7 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Padding(
           padding: const EdgeInsets.only(top: 16.0),
           child: Center(
-            child: Image.asset('images/Logo.png', height: 50.0),
+            child: Image.asset('assets/images/Logo.png', height: 50.0),
           ),
         ),
       ),
@@ -137,62 +137,92 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
- Widget buildProposition() {
-  return FutureBuilder<Robot>(
-    future: getRandomRobot(),
-    builder: (context, snapshot) {
-      if (snapshot.connectionState == ConnectionState.waiting) {
-        return CircularProgressIndicator();
-      } else if (snapshot.hasError) {
-        return Text('Error: ${snapshot.error}');
-      } else if (!snapshot.hasData || snapshot.data == null) {
-        return Text('No data available');
-      } else {
-        final robot = snapshot.data!;
-        final randomColor = Color(Random().nextInt(0xffffffff));
+  Widget buildProposition() {
+    return FutureBuilder<Robot>(
+      future: getRandomRobot(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return CircularProgressIndicator();
+        } else if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}');
+        } else if (!snapshot.hasData || snapshot.data == null) {
+          return Text('No data available');
+        } else {
+          final robot = snapshot.data!;
+          final randomColor = Color(Random().nextInt(0xffffffff));
 
-        return Container(
-          //p-e mettre un padding ici
-          child: Column(
-            children: [
-              CachedNetworkImage(
-                imageUrl: robot.imageUrl,
-                imageBuilder: (context, imageProvider) => Container(
-                  width: MediaQuery.of(context).size.width / 1.1,
-                  height: MediaQuery.of(context).size.height / 1.5,
-                  decoration: BoxDecoration(
-                    color: randomColor,
-                    borderRadius: BorderRadius.circular(50),
-                    image: DecorationImage(
-                      image: imageProvider,
-                      fit: BoxFit.cover,
+          return Container(
+            //p-e mettre un padding ici
+            child: Stack(
+              children: [
+                CachedNetworkImage(
+                  imageUrl: robot.imageUrl,
+                  imageBuilder: (context, imageProvider) => Container(
+                    width: MediaQuery.of(context).size.width / 1.1,
+                    height: MediaQuery.of(context).size.height / 1.8,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(50),
+                      color: randomColor,
+                      image: DecorationImage(
+                        image: imageProvider,
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              SizedBox(height: 16.0),
-              Text(
-                robot.name,
-                style: TextStyle(
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.bold,
+                Positioned(
+                  bottom: 0,
+                  child: Container(
+                    width: MediaQuery.of(context).size.width / 1.1,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(50),
+                        bottomRight: Radius.circular(50),
+                      ),
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Color.fromARGB(255, 58, 57, 57)
+                              .withOpacity(0.0), // transparent at the top
+                          const Color.fromARGB(255, 58, 57, 57)
+                              .withOpacity(0.8), // opaque at the bottom
+                        ],
+                      ),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            robot.name,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          SizedBox(height: 8.0),
+                          Text(
+                            robot.sentence,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16.0,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-              SizedBox(height: 8.0),
-              Text(
-                robot.sentence,
-                style: TextStyle(
-                  fontSize: 16.0,
-                ),
-              ),
-            ],
-          ),
-        );
-      }
-    },
-  );
-}
-
+              ],
+            ),
+          );
+        }
+      },
+    );
+  }
 
   Widget buildSwipeWidget(bool accept) {
     return Material(
@@ -217,7 +247,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         onPressed: () {
           if (accept) {
-             setState(() {
+            setState(() {
               showCross(true);
               buildProposition();
             }); //TODO IL faudra sauvegarder le robot et en générer un nouveau
