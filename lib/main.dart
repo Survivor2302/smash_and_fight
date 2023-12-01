@@ -124,7 +124,7 @@ class _MyHomePageState extends State<MyHomePage> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: AnimatedContainer(
-          duration: Duration(seconds: 0),
+          duration: const Duration(seconds: 0),
           child: cross,
         ),
       ),
@@ -231,7 +231,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                       colors: [
-                        Color.fromARGB(255, 58, 57, 57)
+                        const Color.fromARGB(255, 58, 57, 57)
                             .withOpacity(0.0), // transparent at the top
                         const Color.fromARGB(255, 58, 57, 57)
                             .withOpacity(0.8), // opaque at the bottom
