@@ -2,9 +2,9 @@ import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:smash_and_fight/boxes.dart';
+import 'package:smash_and_fight/helper/boxes.dart';
 import 'package:smash_and_fight/model/robot.dart';
-import 'utils.dart';
+import 'helper/utils.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 void main() async {
@@ -52,7 +52,7 @@ class _MyHomePageState extends State<MyHomePage> {
       attack: 0,
       pv: 0,
       armor: 0,
-      imageUrl: 'https://robohash.org/No Robot');
+      imageUrl: '');
 
   @override
   Widget build(BuildContext context) {
@@ -74,13 +74,13 @@ class _MyHomePageState extends State<MyHomePage> {
               children: [
                 boxRobot.length > 0
                     ? buildSelectedBot(boxRobot.getAt(0))
-                    : buildSelectedBot(noRobot),
+                    : buildSelectedBot(),
                 boxRobot.length > 1
                     ? buildSelectedBot(boxRobot.getAt(1))
-                    : buildSelectedBot(noRobot),
+                    : buildSelectedBot(),
                 boxRobot.length > 2
                     ? buildSelectedBot(boxRobot.getAt(2))
-                    : buildSelectedBot(noRobot),
+                    : buildSelectedBot(),
               ],
             ),
             Row(
@@ -133,7 +133,33 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Widget buildSelectedBot(Robot robot) {
+  Widget buildSelectedBot([Robot? robot]) {
+    if (robot == null) {
+      return Material(
+        elevation: 4.0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(50.0),
+        ),
+        child: Container(
+          width: 100,
+          height: 100,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(50),
+            color: Colors.grey,
+          ),
+          child: Center(
+            child: Text(
+              '?',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 50.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ),
+      );
+    }
     debugPrint('buildSelectedBot: ${robot.name}');
     return Material(
       elevation: 4.0,
