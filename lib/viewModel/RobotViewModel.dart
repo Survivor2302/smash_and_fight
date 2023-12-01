@@ -19,6 +19,7 @@ class RobotViewModel extends ChangeNotifier {
   Robot? get currentRobot => _currentRobot;
 
   set currentRobot(Robot? robot) {
+    debugPrint("currentRobot: ${robot?.name}");
     _currentRobot = robot;
     //notifyListeners();
   }
@@ -26,6 +27,7 @@ class RobotViewModel extends ChangeNotifier {
   Robot? get nextRobot => _nextRobot;
 
   set nextRobot(Robot? robot) {
+    debugPrint("nextRobot: ${robot?.name}");
     _nextRobot = robot;
     //notifyListeners();
   }
