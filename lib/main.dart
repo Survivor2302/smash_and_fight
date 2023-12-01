@@ -160,7 +160,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       );
     }
-    debugPrint('buildSelectedBot: ${robot.name}');
+    //debugPrint('buildSelectedBot: ${robot.name}');
     return Material(
       elevation: 4.0,
       shape: RoundedRectangleBorder(

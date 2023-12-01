@@ -1,6 +1,6 @@
 import 'package:hive/hive.dart';
 
-part 'robot.g.dart';
+part 'adapter/robot.g.dart';
 
 @HiveType(typeId: 1)
 class Robot {
