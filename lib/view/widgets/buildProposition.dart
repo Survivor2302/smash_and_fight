@@ -18,13 +18,7 @@ class _BuildPropositionWidgetState extends State<BuildPropositionWidget> {
     return FutureBuilder<List<Robot>>(
       future: getTwoRobots(widget.robot),
       builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator();
-        } else if (snapshot.hasError) {
-          return Text('Error: ${snapshot.error}');
-        } else if (!snapshot.hasData || snapshot.data == null) {
-          return Text('No data available');
-        } else {
+        if (snapshot.hasData && snapshot.data != null) {
           final robot = snapshot.data!;
           return Container(
             child: Stack(
@@ -91,8 +85,15 @@ class _BuildPropositionWidgetState extends State<BuildPropositionWidget> {
               ],
             ),
           );
+        } else {
+          return Container(
+            child: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
         }
       },
     );
   }
 }
+
