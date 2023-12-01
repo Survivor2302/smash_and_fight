@@ -7,6 +7,8 @@ import 'package:smash_and_fight/model/robot.dart';
 import 'helper/utils.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
+import 'viewModel/RobotViewModel.dart';
+
 void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(RobotAdapter());
@@ -44,15 +46,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   late String name;
-  Robot? currentRobot;
-  Robot? nextRobot;
-  Robot noRobot = Robot(
-      name: 'No Robot',
-      sentence: 'No Robot',
-      attack: 0,
-      pv: 0,
-      armor: 0,
-      imageUrl: '');
+  RobotViewModel robotViewModel = RobotViewModel();
 
   @override
   Widget build(BuildContext context) {
@@ -185,7 +179,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Widget buildProposition() {
     return FutureBuilder<List<Robot>>(
-      future: getTwoRobots(nextRobot),
+      future: getTwoRobots(robotViewModel.nextRobot),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return CircularProgressIndicator();
@@ -195,10 +189,11 @@ class _MyHomePageState extends State<MyHomePage> {
           return Text('No data available');
         } else {
           final robot = snapshot.data!;
-          currentRobot = robot[0];
-          debugPrint('currentRobot: ${currentRobot?.name}');
-          nextRobot = robot[1];
-          debugPrint('nextRobot: ${nextRobot?.name}');
+          robotViewModel.currentRobot = robot[0];
+          debugPrint(
+              'currentRobotviewmodel: ${robotViewModel.currentRobot?.name}');
+          robotViewModel.nextRobot = robot[1];
+          debugPrint('nextRobotviewmodel: ${robotViewModel.nextRobot?.name}');
           final randomColor = Color(Random().nextInt(0xffffffff));
 
           return Container(
@@ -298,7 +293,7 @@ class _MyHomePageState extends State<MyHomePage> {
         onPressed: () {
           if (accept) {
             setState(() {
-              boxRobot.add(currentRobot);
+              boxRobot.add(robotViewModel.currentRobot!);
               showCross(true);
               buildProposition();
             }); //TODO IL faudra sauvegarder le robot et en générer un nouveau
