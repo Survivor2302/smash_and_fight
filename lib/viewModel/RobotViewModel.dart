@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../model/robot.dart';
 
 class RobotViewModel extends ChangeNotifier {
