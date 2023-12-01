@@ -85,8 +85,8 @@ class _MyHomePageState extends State<MyHomePage> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Draggable(
-                    child: buildProposition(),
-                    feedback: buildProposition()) //TODO A Bosser
+                    feedback: buildProposition(),
+                    child: buildProposition()) // A Bosser
               ],
             ),
             Row(
@@ -117,7 +117,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
 
-    Timer timer = Timer(const Duration(milliseconds: 550), () {
+    Timer(const Duration(milliseconds: 550), () {
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
     });
 
@@ -195,7 +195,7 @@ class _MyHomePageState extends State<MyHomePage> {
           return const Text('No data available');
         } else {
           final robot = snapshot.data!;
-          WidgetsBinding.instance!.addPostFrameCallback((_) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
             robotViewModel.currentRobot = robot[0];
             robotViewModel.nextRobot = robot[1];
           });
@@ -300,7 +300,7 @@ class _MyHomePageState extends State<MyHomePage> {
             setState(() {
               boxRobot.add(robotViewModel.currentRobot!);
               showCross(true);
-            }); //TODO IL faudra sauvegarder le robot et en générer un nouveau
+            }); // IL faudra sauvegarder le robot et en générer un nouveau
           }
           if (!accept) {
             setState(() {
