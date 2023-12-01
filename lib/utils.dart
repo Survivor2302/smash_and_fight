@@ -33,3 +33,15 @@ Future<Robot> getRandomRobot() async {
       armor: Random().nextInt(100),
       imageUrl: 'https://robohash.org/$name');
 }
+
+Future<List<Robot>> getTwoRobots(Robot? nextRobot) async {
+  if (nextRobot != null) {
+    final currentRobot = nextRobot;
+    final newRobot = await getRandomRobot();
+    return [currentRobot, newRobot];
+  }
+
+  final currentRobot = await getRandomRobot();
+  final newRobot = await getRandomRobot();
+  return [currentRobot, newRobot];
+}

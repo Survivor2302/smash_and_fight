@@ -1,13 +1,16 @@
 import 'dart:async';
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:smash_and_fight/boxes.dart';
 import 'package:smash_and_fight/model/robot.dart';
-
 import 'utils.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
-void main() {
+void main() async {
+  await Hive.initFlutter();
+  Hive.registerAdapter(RobotAdapter());
+  boxRobot = await Hive.openBox<Robot>('robotBox');
   runApp(const MyApp());
 }
 
@@ -38,6 +41,8 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   late String name;
+  Robot? currentRobot;
+  Robot? nextRobot;
 
   @override
   Widget build(BuildContext context) {
@@ -138,8 +143,8 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Widget buildProposition() {
-    return FutureBuilder<Robot>(
-      future: getRandomRobot(),
+    return FutureBuilder<List<Robot>>(
+      future: getTwoRobots(nextRobot),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return CircularProgressIndicator();
@@ -149,6 +154,10 @@ class _MyHomePageState extends State<MyHomePage> {
           return Text('No data available');
         } else {
           final robot = snapshot.data!;
+          currentRobot = robot[0];
+          debugPrint('currentRobot: ${currentRobot?.name}');
+          nextRobot = robot[1];
+          debugPrint('nextRobot: ${nextRobot?.name}');
           final randomColor = Color(Random().nextInt(0xffffffff));
 
           return Container(
@@ -156,7 +165,7 @@ class _MyHomePageState extends State<MyHomePage> {
             child: Stack(
               children: [
                 CachedNetworkImage(
-                  imageUrl: robot.imageUrl,
+                  imageUrl: robot.first.imageUrl,
                   imageBuilder: (context, imageProvider) => Container(
                     width: MediaQuery.of(context).size.width / 1.1,
                     height: MediaQuery.of(context).size.height / 1.8,
@@ -196,7 +205,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            robot.name,
+                            robot.first.name,
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 20.0,
@@ -205,7 +214,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           ),
                           SizedBox(height: 8.0),
                           Text(
-                            robot.sentence,
+                            robot.first.sentence,
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 16.0,
@@ -248,12 +257,14 @@ class _MyHomePageState extends State<MyHomePage> {
         onPressed: () {
           if (accept) {
             setState(() {
+              boxRobot.add(currentRobot);
               showCross(true);
               buildProposition();
             }); //TODO IL faudra sauvegarder le robot et en générer un nouveau
           }
           if (!accept) {
             setState(() {
+              debugPrint(boxRobot.length.toString());
               showCross(false);
               buildProposition();
             });

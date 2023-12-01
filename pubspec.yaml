@@ -32,7 +32,8 @@ dependencies:
     sdk: flutter
   cached_network_image: ^3.3.0
   http: ^1.1.2
-
+  hive: ^2.0.4
+  hive_flutter: ^1.1.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -41,7 +42,8 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
+  hive_generator: ^1.1.0
+  build_runner: ^2.1.4
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your
@@ -57,6 +59,7 @@ flutter:
   assets:
   - assets/json/liste-des-prenoms.json
   - assets/json/disquettes.json
+  - assets/images/Logo.png
   
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
