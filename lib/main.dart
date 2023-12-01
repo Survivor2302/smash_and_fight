@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:smash_and_fight/helper/boxes.dart';
 import 'package:smash_and_fight/model/robot.dart';
+import 'package:smash_and_fight/view/widgets/buildProposition.dart';
+import 'package:smash_and_fight/view/widgets/buildSelectedBot.dart';
 import 'helper/utils.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -46,13 +48,6 @@ class _MyHomePageState extends State<MyHomePage> {
   late String name;
   Robot? currentRobot;
   Robot? nextRobot;
-  Robot noRobot = Robot(
-      name: 'No Robot',
-      sentence: 'No Robot',
-      attack: 0,
-      pv: 0,
-      armor: 0,
-      imageUrl: '');
 
   @override
   Widget build(BuildContext context) {
@@ -134,145 +129,14 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Widget buildSelectedBot([Robot? robot]) {
-    if (robot == null) {
-      return Material(
-        elevation: 4.0,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(50.0),
-        ),
-        child: Container(
-          width: 100,
-          height: 100,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(50),
-            color: Colors.grey,
-          ),
-          child: Center(
-            child: Text(
-              '?',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 50.0,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-        ),
-      );
-    }
-    //debugPrint('buildSelectedBot: ${robot.name}');
-    return Material(
-      elevation: 4.0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(50.0),
-      ),
-      child: CachedNetworkImage(
-        imageUrl: robot.imageUrl,
-        imageBuilder: (context, imageProvider) => Container(
-          width: 100,
-          height: 100,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(50),
-            image: DecorationImage(
-              image: imageProvider,
-              fit: BoxFit.cover,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
+  return SelectedBotWidget(robot: robot);
+}
 
-  Widget buildProposition() {
-    return FutureBuilder<List<Robot>>(
-      future: getTwoRobots(nextRobot),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator();
-        } else if (snapshot.hasError) {
-          return Text('Error: ${snapshot.error}');
-        } else if (!snapshot.hasData || snapshot.data == null) {
-          return Text('No data available');
-        } else {
-          final robot = snapshot.data!;
-          currentRobot = robot[0];
-          debugPrint('currentRobot: ${currentRobot?.name}');
-          nextRobot = robot[1];
-          debugPrint('nextRobot: ${nextRobot?.name}');
-          final randomColor = Color(Random().nextInt(0xffffffff));
 
-          return Container(
-            //p-e mettre un padding ici
-            child: Stack(
-              children: [
-                CachedNetworkImage(
-                  imageUrl: robot.first.imageUrl,
-                  imageBuilder: (context, imageProvider) => Container(
-                    width: MediaQuery.of(context).size.width / 1.1,
-                    height: MediaQuery.of(context).size.height / 1.8,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(50),
-                      color: randomColor,
-                      image: DecorationImage(
-                        image: imageProvider,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                ),
-                Positioned(
-                  bottom: 0,
-                  child: Container(
-                    width: MediaQuery.of(context).size.width / 1.1,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(50),
-                        bottomRight: Radius.circular(50),
-                      ),
-                      gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [
-                          Color.fromARGB(255, 58, 57, 57)
-                              .withOpacity(0.0), // transparent at the top
-                          const Color.fromARGB(255, 58, 57, 57)
-                              .withOpacity(0.8), // opaque at the bottom
-                        ],
-                      ),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            robot.first.name,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20.0,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          SizedBox(height: 8.0),
-                          Text(
-                            robot.first.sentence,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16.0,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          );
-        }
-      },
-    );
-  }
+Widget buildProposition([Robot? robot]) {
+  return BuildPropositionWidget(robot: robot);
+}
+
 
   Widget buildSwipeWidget(bool accept) {
     return Material(
@@ -297,6 +161,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         onPressed: () {
           if (accept) {
+            debugPrint(currentRobot?.name);
             setState(() {
               boxRobot.add(currentRobot);
               showCross(true);
