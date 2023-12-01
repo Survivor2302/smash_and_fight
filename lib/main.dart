@@ -2,11 +2,11 @@ import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:provider/provider.dart';
 import 'package:smash_and_fight/helper/boxes.dart';
 import 'package:smash_and_fight/model/robot.dart';
 import 'helper/utils.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-
 import 'viewmodel/robotviewmodel.dart';
 
 void main() async {
@@ -16,7 +16,12 @@ void main() async {
 
   debugPrint('MAIN boxRobot: ${boxRobot.length}');
   boxRobot.clear();
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => RobotViewModel(),
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -46,7 +51,6 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   late String name;
-  RobotViewModel robotViewModel = RobotViewModel();
 
   @override
   Widget build(BuildContext context) {
@@ -178,6 +182,8 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Widget buildProposition() {
+    RobotViewModel robotViewModel = Provider.of<RobotViewModel>(context);
+
     return FutureBuilder<List<Robot>>(
       future: getTwoRobots(robotViewModel.nextRobot),
       builder: (context, snapshot) {
@@ -189,11 +195,13 @@ class _MyHomePageState extends State<MyHomePage> {
           return Text('No data available');
         } else {
           final robot = snapshot.data!;
-          robotViewModel.currentRobot = robot[0];
-          debugPrint(
-              'currentRobotviewmodel: ${robotViewModel.currentRobot?.name}');
-          robotViewModel.nextRobot = robot[1];
-          debugPrint('nextRobotviewmodel: ${robotViewModel.nextRobot?.name}');
+          WidgetsBinding.instance!.addPostFrameCallback((_) {
+            robotViewModel.currentRobot = robot[0];
+            debugPrint(
+                'currentRobotviewmodel: ${robotViewModel.currentRobot?.name}');
+            robotViewModel.nextRobot = robot[1];
+            debugPrint('nextRobotviewmodel: ${robotViewModel.nextRobot?.name}');
+          });
           final randomColor = Color(Random().nextInt(0xffffffff));
 
           return Container(
@@ -270,6 +278,9 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Widget buildSwipeWidget(bool accept) {
+    RobotViewModel robotViewModel =
+        Provider.of<RobotViewModel>(context, listen: false);
+
     return Material(
       elevation: 4.0,
       shape: RoundedRectangleBorder(
@@ -295,14 +306,12 @@ class _MyHomePageState extends State<MyHomePage> {
             setState(() {
               boxRobot.add(robotViewModel.currentRobot!);
               showCross(true);
-              buildProposition();
             }); //TODO IL faudra sauvegarder le robot et en générer un nouveau
           }
           if (!accept) {
             setState(() {
               debugPrint(boxRobot.length.toString());
               showCross(false);
-              buildProposition();
             });
           }
         },
