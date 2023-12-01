@@ -11,6 +11,9 @@ void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(RobotAdapter());
   boxRobot = await Hive.openBox<Robot>('robotBox');
+
+  debugPrint('MAIN boxRobot: ${boxRobot.length}');
+  boxRobot.clear();
   runApp(const MyApp());
 }
 
@@ -43,6 +46,13 @@ class _MyHomePageState extends State<MyHomePage> {
   late String name;
   Robot? currentRobot;
   Robot? nextRobot;
+  Robot noRobot = Robot(
+      name: 'No Robot',
+      sentence: 'No Robot',
+      attack: 0,
+      pv: 0,
+      armor: 0,
+      imageUrl: 'https://robohash.org/No Robot');
 
   @override
   Widget build(BuildContext context) {
@@ -62,9 +72,15 @@ class _MyHomePageState extends State<MyHomePage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                buildSelectedBot('text1'),
-                buildSelectedBot('text2'),
-                buildSelectedBot('text3'),
+                boxRobot.length > 0
+                    ? buildSelectedBot(boxRobot.getAt(0))
+                    : buildSelectedBot(noRobot),
+                boxRobot.length > 1
+                    ? buildSelectedBot(boxRobot.getAt(1))
+                    : buildSelectedBot(noRobot),
+                boxRobot.length > 2
+                    ? buildSelectedBot(boxRobot.getAt(2))
+                    : buildSelectedBot(noRobot),
               ],
             ),
             Row(
@@ -117,16 +133,15 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Widget buildSelectedBot(String text) {
-    String imageUrl = 'https://robohash.org/$text';
-
+  Widget buildSelectedBot(Robot robot) {
+    debugPrint('buildSelectedBot: ${robot.name}');
     return Material(
       elevation: 4.0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(50.0),
       ),
       child: CachedNetworkImage(
-        imageUrl: imageUrl,
+        imageUrl: robot.imageUrl,
         imageBuilder: (context, imageProvider) => Container(
           width: 100,
           height: 100,
