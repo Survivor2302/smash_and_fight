@@ -46,6 +46,7 @@ class RobotViewModel extends ChangeNotifier {
       _user?.robots.forEach((element) {
         debugPrint("robot: ${element.name}");
       });
+      //add user to box
     }
   }
 }
