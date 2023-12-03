@@ -12,7 +12,7 @@ class UsernameInputPage extends StatefulWidget {
 }
 
 class _UsernameInputPageState extends State<UsernameInputPage> {
-  TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _usernameController = TextEditingController();
   late RobotViewModel robotViewModel;
 
   @override
@@ -25,16 +25,42 @@ class _UsernameInputPageState extends State<UsernameInputPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Enter Your Username'),
+        title: Padding(
+          padding: const EdgeInsets.only(top: 16.0),
+          child: Center(
+            child: Image.asset('assets/images/Logo.png', height: 50.0),
+          ),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Text(
+              'Entre ton prénom ',
+              style: TextStyle(
+                fontSize: 30,
+                color:  Colors.black,
+                fontFamily: 'Roboto',
+                fontWeight: FontWeight.w500,
+
+              ),
+            ),
+            SizedBox(height: 60),
             TextField(
               controller: _usernameController,
-              decoration: InputDecoration(labelText: 'Username'),
+              decoration: InputDecoration(
+                labelText: 'Prénom...',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                filled: true,
+                fillColor: Color(0xFFeaeaea),
+                labelStyle: TextStyle(
+                  color: Colors.grey,
+                ),
+              ),
             ),
             SizedBox(height: 20),
             ElevatedButton(
@@ -50,7 +76,15 @@ class _UsernameInputPageState extends State<UsernameInputPage> {
                   ),
                 );
               },
-              child: Text('Continue'),
+              child:   Text(
+              'Valider',
+              style: TextStyle(
+                color:  Colors.black,
+                fontFamily: 'Roboto',
+                fontWeight: FontWeight.w500,
+
+              ),
+            ),
             ),
           ],
         ),
