@@ -10,36 +10,32 @@ import 'package:smash_and_fight/viewmodel/robotviewmodel.dart';
 
 class PropositionWidget extends StatefulWidget {
   final SwipeWidgetNotifier swipeWidgetNotifier;
-  
+
   PropositionWidget({required this.swipeWidgetNotifier});
-  
+
   @override
   _PropositionWidgetState createState() => _PropositionWidgetState();
 }
 
 class _PropositionWidgetState extends State<PropositionWidget> {
   late RobotViewModel robotViewModel;
-  
+
   @override
   void initState() {
     super.initState();
-    // Move the initialization of robotViewModel to didChangeDependencies
-    // to ensure that context is available
     robotViewModel = Provider.of<RobotViewModel>(context, listen: false);
     widget.swipeWidgetNotifier.addListener(_handleChanges);
   }
-  
+
   void _handleChanges() {
     setState(() {
       // Trigger the rebuild of WidgetB
     });
   }
-  
+
   @override
   Widget build(BuildContext context) {
-    print("PropositionWidget is being rebuilt!"); // Add a print statement
     RobotViewModel robotViewModel = context.watch<RobotViewModel>();
-
     return FutureBuilder<List<Robot>>(
       future: getTwoRobots(robotViewModel.nextRobot),
       builder: (context, snapshot) {

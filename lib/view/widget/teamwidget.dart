@@ -1,11 +1,6 @@
-import 'dart:math';
-
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:smash_and_fight/helper/utils.dart';
 import 'package:smash_and_fight/model/changenotifier/swipewidgetnotifier.dart';
-import 'package:smash_and_fight/model/robot.dart';
 import 'package:smash_and_fight/view/widget/selectedwidget.dart';
 import 'package:smash_and_fight/viewmodel/robotviewmodel.dart';
 
@@ -38,15 +33,22 @@ class _TeamWidgetState extends State<TeamWidget> {
 
   @override
   Widget build(BuildContext context) {
-    print("teamWidget is being rebuilt!"); // Add a print statement
     RobotViewModel robotViewModel = context.watch<RobotViewModel>();
-    debugPrint("TEST teamWidget: ${robotViewModel.currentRobot?.name}");
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        SelectedWidget(robot: robotViewModel.currentRobot),
-        SelectedWidget(robot: robotViewModel.currentRobot),
-        SelectedWidget(robot: robotViewModel.currentRobot),
+        SelectedWidget(
+            robot: robotViewModel.user!.robots.length > 0
+                ? robotViewModel.user?.robots[0]
+                : null),
+        SelectedWidget(
+            robot: robotViewModel.user!.robots.length > 1
+                ? robotViewModel.user?.robots[1]
+                : null),
+        SelectedWidget(
+            robot: robotViewModel.user!.robots.length > 2
+                ? robotViewModel.user?.robots[2]
+                : null),
       ],
     );
   }

@@ -5,7 +5,6 @@ import '../model/robot.dart';
 class RobotViewModel extends ChangeNotifier {
   Robot? _currentRobot;
   Robot? _nextRobot;
-
   User? _user;
 
   RobotViewModel._internal() {
@@ -23,31 +22,30 @@ class RobotViewModel extends ChangeNotifier {
   Robot? get currentRobot => _currentRobot;
 
   set currentRobot(Robot? robot) {
-    debugPrint("currentRobot: ${robot?.name}");
     _currentRobot = robot;
-    //notifyListeners();
   }
 
   Robot? get nextRobot => _nextRobot;
 
   set nextRobot(Robot? robot) {
-    debugPrint("nextRobot: ${robot?.name}");
     _nextRobot = robot;
-    //notifyListeners();
   }
 
   User? get user => _user;
 
   set user(User? user) {
-    debugPrint("user: ${user?.name}");
     _user = user;
-    //notifyListeners();
   }
 
   //add robot to user
   void addRobot(Robot robot) {
-    debugPrint("addRobot: ${robot.name}");
     _user?.robots.add(robot);
-    //notifyListeners();
+
+    if (_user?.robots.length == 3) {
+      debugPrint("team: ${_user?.name}");
+      _user?.robots.forEach((element) {
+        debugPrint("robot: ${element.name}");
+      });
+    }
   }
 }

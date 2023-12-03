@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:smash_and_fight/helper/boxes.dart';
 import 'package:smash_and_fight/model/changenotifier/swipewidgetnotifier.dart';
 import 'package:smash_and_fight/viewmodel/robotviewmodel.dart';
 
@@ -26,7 +25,6 @@ class _SwipeWidgetState extends State<SwipeWidget> {
 
   @override
   Widget build(BuildContext context) {
-    print("SwipeWidget is being rebuilt!");
     return Material(
       elevation: 4.0,
       shape: RoundedRectangleBorder(
@@ -50,15 +48,14 @@ class _SwipeWidgetState extends State<SwipeWidget> {
         onPressed: () {
           if (widget.accept) {
             setState(() {
-              boxRobot.add(robotViewModel.currentRobot!);
-              debugPrint(boxRobot.length.toString());
+              //boxRobot.add(robotViewModel.currentRobot!);
+              robotViewModel.addRobot(robotViewModel.currentRobot!);
               showCross(true);
             });
             widget.swipeWidgetNotifier.notifyChanges(); // Ajoutez cette ligne
           }
           if (!widget.accept) {
             setState(() {
-              debugPrint(boxRobot.length.toString());
               showCross(false);
             });
             widget.swipeWidgetNotifier.notifyChanges(); // Ajoutez cette ligne
