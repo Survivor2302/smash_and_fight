@@ -7,7 +7,6 @@ import 'package:smash_and_fight/viewmodel/robotviewmodel.dart';
 class SwipeWidget extends StatefulWidget {
   final bool accept;
   final SwipeWidgetNotifier swipeWidgetNotifier;
-  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   SwipeWidget({required this.accept, required this.swipeWidgetNotifier});
 
@@ -51,13 +50,13 @@ class _SwipeWidgetState extends State<SwipeWidget> {
             setState(() {
               //boxRobot.add(robotViewModel.currentRobot!);
               robotViewModel.addRobot(robotViewModel.currentRobot!);
-              showCross(true);
+              showCross(context, true);
             });
             widget.swipeWidgetNotifier.notifyChanges(); // Ajoutez cette ligne
           }
           if (!widget.accept) {
             setState(() {
-              showCross(false);
+              showCross(context, false);
             });
             widget.swipeWidgetNotifier.notifyChanges(); // Ajoutez cette ligne
           }
@@ -69,32 +68,36 @@ class _SwipeWidgetState extends State<SwipeWidget> {
     );
   }
 
-  void showCross(bool accept) {
-    Widget cross = Container(
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height,
-      color: accept ? Colors.green : Colors.red,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          accept
-              ? const Icon(Icons.favorite, size: 100)
-              : const Icon(Icons.delete_forever, size: 100),
-        ],
-      ),
-    );
-
-    Timer(const Duration(milliseconds: 550), () {
-      ScaffoldMessenger.of(context).hideCurrentSnackBar();
-    });
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: AnimatedContainer(
-          duration: const Duration(seconds: 0),
-          child: cross,
+  void showCross(BuildContext context, bool accept) {
+    if (mounted) {
+      Widget cross = Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        color: accept ? Colors.green : Colors.red,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            accept
+                ? const Icon(Icons.favorite, size: 100)
+                : const Icon(Icons.delete_forever, size: 100),
+          ],
         ),
-      ),
-    );
+      );
+
+      Timer(const Duration(milliseconds: 550), () {
+        if (mounted) {
+          ScaffoldMessenger.of(context).hideCurrentSnackBar();
+        }
+      });
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: AnimatedContainer(
+            duration: const Duration(seconds: 0),
+            child: cross,
+          ),
+        ),
+      );
+    }
   }
 }

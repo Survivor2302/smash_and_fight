@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smash_and_fight/model/changenotifier/swipewidgetnotifier.dart';
+import 'package:smash_and_fight/view/widget/fightwidget.dart';
+import 'package:smash_and_fight/view/widget/opponentlistwidget.dart';
 import 'package:smash_and_fight/view/widget/propositionwidget.dart';
 import 'package:smash_and_fight/view/widget/teamwidget.dart';
 import 'package:smash_and_fight/view/widget/swipeWidget.dart';
@@ -66,7 +68,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     swipeWidgetNotifier: swipeWidgetNotifier,
                   ),
                 ] else
-                  const Text('Vous avez déjà 3 robots !')
+                  OpponentListWidget(),
               ],
             ),
             Row(
@@ -78,7 +80,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   SwipeWidget(
                       accept: true, swipeWidgetNotifier: swipeWidgetNotifier),
                 ] else
-                  const Text('Vous avez déjà 3 robots !')
+                  FightWidget()
               ],
             ),
           ],
