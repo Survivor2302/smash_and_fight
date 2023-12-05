@@ -23,12 +23,14 @@ class RobotViewModel extends ChangeNotifier {
 
   set currentRobot(Robot? robot) {
     _currentRobot = robot;
+    debugPrint("current robot: ${_currentRobot?.name}");
   }
 
   Robot? get nextRobot => _nextRobot;
 
   set nextRobot(Robot? robot) {
     _nextRobot = robot;
+    debugPrint("next robot: ${_nextRobot?.name}");
   }
 
   User? get user => _user;
@@ -45,6 +47,7 @@ class RobotViewModel extends ChangeNotifier {
       debugPrint("team: ${_user?.name}");
       _user?.robots.forEach((element) {
         debugPrint("robot: ${element.name}");
+        notifyListeners(); // Notifier les écouteurs que la condition est remplie
       });
       //add user to box
     }

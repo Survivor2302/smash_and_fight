@@ -36,6 +36,7 @@ class _PropositionWidgetState extends State<PropositionWidget> {
   @override
   Widget build(BuildContext context) {
     RobotViewModel robotViewModel = context.watch<RobotViewModel>();
+
     return FutureBuilder<List<Robot>>(
       future: getTwoRobots(robotViewModel.nextRobot),
       builder: (context, snapshot) {

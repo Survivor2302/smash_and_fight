@@ -14,7 +14,7 @@ class UsernameInputPage extends StatefulWidget {
 class _UsernameInputPageState extends State<UsernameInputPage> {
   final TextEditingController _usernameController = TextEditingController();
   late RobotViewModel robotViewModel;
-
+  
   @override
   void initState() {
     super.initState();

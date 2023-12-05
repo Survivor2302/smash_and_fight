@@ -7,6 +7,7 @@ import 'package:smash_and_fight/viewmodel/robotviewmodel.dart';
 class SwipeWidget extends StatefulWidget {
   final bool accept;
   final SwipeWidgetNotifier swipeWidgetNotifier;
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   SwipeWidget({required this.accept, required this.swipeWidgetNotifier});
 
