@@ -49,7 +49,9 @@ class RobotViewModel extends ChangeNotifier {
         debugPrint("robot: ${element.name}");
         notifyListeners(); // Notifier les écouteurs que la condition est remplie
       });
-      //add user to box
     }
   }
+ 
+
+
 }

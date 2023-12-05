@@ -68,7 +68,15 @@ class _MyHomePageState extends State<MyHomePage> {
                     swipeWidgetNotifier: swipeWidgetNotifier,
                   ),
                 ] else
-                  OpponentListWidget(),
+                  Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                          color: Colors.black, width: 2.0), // Border properties
+                      borderRadius: BorderRadius.circular(
+                          15.0), // Optional: Border radius
+                    ),
+                    child: OpponentListWidget(),
+                  ),
               ],
             ),
             Row(
