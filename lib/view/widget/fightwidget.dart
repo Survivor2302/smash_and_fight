@@ -20,6 +20,31 @@ class _FightWidgetState extends State<FightWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Text("FightWidget");
+    return Material(
+      elevation: 4.0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(80.0),
+      ),
+      child: TextButton(
+        style: ButtonStyle(
+          fixedSize: MaterialStateProperty.all<Size>(
+            const Size(400, 80),
+          ),
+          backgroundColor: MaterialStateProperty.all<Color>(
+            Colors.white,
+          ),
+          side: MaterialStateProperty.all<BorderSide>(
+            const BorderSide(
+              color: Colors.grey,
+              width: 2.0,
+            ),
+          ),
+        ),
+        onPressed: () {
+          //TODO BDD
+        },
+        child: const Image(image: AssetImage('images/fight.png')),
+      ),
+    );
   }
 }
