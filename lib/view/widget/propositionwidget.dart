@@ -27,9 +27,7 @@ class _PropositionWidgetState extends State<PropositionWidget> {
   }
 
   void _handleChanges() {
-    setState(() {
-      // Trigger the rebuild of WidgetB
-    });
+    setState(() {});
   }
 
   @override

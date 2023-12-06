@@ -19,16 +19,12 @@ class _TeamWidgetState extends State<TeamWidget> {
   @override
   void initState() {
     super.initState();
-    // Move the initialization of robotViewModel to didChangeDependencies
-    // to ensure that context is available
     robotViewModel = Provider.of<RobotViewModel>(context, listen: false);
     widget.swipeWidgetNotifier.addListener(_handleChanges);
   }
 
   void _handleChanges() {
-    setState(() {
-      // Trigger the rebuild of WidgetB
-    });
+    setState(() {});
   }
 
   @override
@@ -38,7 +34,7 @@ class _TeamWidgetState extends State<TeamWidget> {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         SelectedWidget(
-            robot: robotViewModel.user!.robots.length > 0
+            robot: robotViewModel.user!.robots.isNotEmpty
                 ? robotViewModel.user?.robots[0]
                 : null),
         SelectedWidget(

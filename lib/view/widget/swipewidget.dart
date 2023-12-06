@@ -48,17 +48,16 @@ class _SwipeWidgetState extends State<SwipeWidget> {
         onPressed: () {
           if (widget.accept) {
             setState(() {
-              //boxRobot.add(robotViewModel.currentRobot!);
               robotViewModel.addRobot(robotViewModel.currentRobot!);
               showCross(context, true);
             });
-            widget.swipeWidgetNotifier.notifyChanges(); // Ajoutez cette ligne
+            widget.swipeWidgetNotifier.notifyChanges();
           }
           if (!widget.accept) {
             setState(() {
               showCross(context, false);
             });
-            widget.swipeWidgetNotifier.notifyChanges(); // Ajoutez cette ligne
+            widget.swipeWidgetNotifier.notifyChanges();
           }
         },
         child: widget.accept

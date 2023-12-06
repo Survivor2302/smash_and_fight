@@ -41,7 +41,7 @@ class _FightWidgetState extends State<FightWidget> {
             ),
           ),
           onPressed: () {
-            //TODO BDD
+            //TODO fight function
           },
           child: Image.asset('assets/images/fight.png')),
     );

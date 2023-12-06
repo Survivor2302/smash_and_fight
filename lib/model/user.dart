@@ -9,6 +9,6 @@ class User {
   String name;
   @HiveField(1)
   List<Robot> robots;
-
+  
   User({required this.name}) : robots = <Robot>[];
 }

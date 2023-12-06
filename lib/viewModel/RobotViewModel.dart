@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
 import 'package:smash_and_fight/helper/boxes.dart';
 import 'package:smash_and_fight/helper/utils.dart';
 import 'package:smash_and_fight/model/user.dart';

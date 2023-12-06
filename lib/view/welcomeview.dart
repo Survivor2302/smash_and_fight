@@ -38,7 +38,7 @@ class _UsernameInputPageState extends State<UsernameInputPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
+            const Text(
               'Entre ton prénom ',
               style: TextStyle(
                 fontSize: 30,
@@ -47,7 +47,7 @@ class _UsernameInputPageState extends State<UsernameInputPage> {
                 fontWeight: FontWeight.w500,
               ),
             ),
-            SizedBox(height: 60),
+            const SizedBox(height: 60),
             TextField(
               controller: _usernameController,
               decoration: InputDecoration(
@@ -57,12 +57,12 @@ class _UsernameInputPageState extends State<UsernameInputPage> {
                 ),
                 filled: true,
                 fillColor: Color(0xFFeaeaea),
-                labelStyle: TextStyle(
+                labelStyle: const TextStyle(
                   color: Colors.grey,
                 ),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
                 var exists = false;

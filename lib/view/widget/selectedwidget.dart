@@ -48,7 +48,6 @@ class _SelectedWidgetState extends State<SelectedWidget> {
         ),
       );
     }
-    //debugPrint('buildSelectedBot: ${robot.name}');
     return Material(
       elevation: 4.0,
       shape: RoundedRectangleBorder(
