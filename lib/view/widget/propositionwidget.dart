@@ -1,12 +1,11 @@
 import 'dart:math';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smash_and_fight/helper/utils.dart';
 import 'package:smash_and_fight/model/changenotifier/swipewidgetnotifier.dart';
 import 'package:smash_and_fight/model/robot.dart';
-import 'package:smash_and_fight/viewmodel/robotviewmodel.dart';
+import 'package:smash_and_fight/viewmodel/RobotViewModel.dart';
 
 class PropositionWidget extends StatefulWidget {
   final SwipeWidgetNotifier swipeWidgetNotifier;

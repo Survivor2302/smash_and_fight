@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:math';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:smash_and_fight/model/robot.dart';
+import 'package:smash_and_fight/model/user.dart';
 
 Future<String> getPrenomAleatoire() async {
   final String response =
@@ -44,4 +45,18 @@ Future<List<Robot>> getTwoRobots(Robot? nextRobot) async {
   final currentRobot = await getRandomRobot();
   final newRobot = await getRandomRobot();
   return [currentRobot, newRobot];
+}
+
+Future<User> generateRandomOpponent() async {
+  final robot1 = await getRandomRobot();
+  final robot2 = await getRandomRobot();
+  final robot3 = await getRandomRobot();
+
+  var randomOpponent = User(
+    name: "IA",
+  );
+
+  randomOpponent.robots = [robot1, robot2, robot3];
+
+  return randomOpponent;
 }

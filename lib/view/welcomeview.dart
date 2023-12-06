@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:smash_and_fight/helper/boxes.dart';
 import 'package:smash_and_fight/model/user.dart';
 import 'package:smash_and_fight/view/smashview.dart';
-import 'package:smash_and_fight/viewmodel/robotviewmodel.dart';
+import 'package:smash_and_fight/viewmodel/RobotViewModel.dart';
 
 class UsernameInputPage extends StatefulWidget {
   const UsernameInputPage({Key? key}) : super(key: key);
@@ -14,7 +15,7 @@ class UsernameInputPage extends StatefulWidget {
 class _UsernameInputPageState extends State<UsernameInputPage> {
   final TextEditingController _usernameController = TextEditingController();
   late RobotViewModel robotViewModel;
-  
+
   @override
   void initState() {
     super.initState();
@@ -41,10 +42,9 @@ class _UsernameInputPageState extends State<UsernameInputPage> {
               'Entre ton prénom ',
               style: TextStyle(
                 fontSize: 30,
-                color:  Colors.black,
+                color: Colors.black,
                 fontFamily: 'Roboto',
                 fontWeight: FontWeight.w500,
-
               ),
             ),
             SizedBox(height: 60),
@@ -65,7 +65,20 @@ class _UsernameInputPageState extends State<UsernameInputPage> {
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                robotViewModel.user = User(name: _usernameController.text);
+                var exists = false;
+                boxUser.values.forEach((element) {
+                  if (element.name == _usernameController.text) {
+                    element.robots.forEach((robot) {
+                      robotViewModel.addRobot(robot);
+                    });
+                    robotViewModel.user = element;
+                    exists = true;
+                  }
+                });
+
+                if (!exists) {
+                  robotViewModel.user = User(name: _usernameController.text);
+                }
 
                 Navigator.push(
                   context,
@@ -76,15 +89,14 @@ class _UsernameInputPageState extends State<UsernameInputPage> {
                   ),
                 );
               },
-              child:   Text(
-              'Valider',
-              style: TextStyle(
-                color:  Colors.black,
-                fontFamily: 'Roboto',
-                fontWeight: FontWeight.w500,
-
+              child: Text(
+                'Valider',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontFamily: 'Roboto',
+                  fontWeight: FontWeight.w500,
+                ),
               ),
-            ),
             ),
           ],
         ),

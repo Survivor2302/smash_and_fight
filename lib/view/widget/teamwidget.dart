@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smash_and_fight/model/changenotifier/swipewidgetnotifier.dart';
 import 'package:smash_and_fight/view/widget/selectedwidget.dart';
-import 'package:smash_and_fight/viewmodel/robotviewmodel.dart';
+import 'package:smash_and_fight/viewmodel/RobotViewModel.dart';
 
 class TeamWidget extends StatefulWidget {
   final SwipeWidgetNotifier swipeWidgetNotifier;

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:smash_and_fight/viewmodel/robotviewmodel.dart';
+import 'package:smash_and_fight/viewmodel/RobotViewModel.dart';
 
 class FightWidget extends StatefulWidget {
   FightWidget();
@@ -26,25 +26,24 @@ class _FightWidgetState extends State<FightWidget> {
         borderRadius: BorderRadius.circular(80.0),
       ),
       child: TextButton(
-        style: ButtonStyle(
-          fixedSize: MaterialStateProperty.all<Size>(
-            const Size(400, 80),
-          ),
-          backgroundColor: MaterialStateProperty.all<Color>(
-            Colors.white,
-          ),
-          side: MaterialStateProperty.all<BorderSide>(
-            const BorderSide(
-              color: Colors.grey,
-              width: 2.0,
+          style: ButtonStyle(
+            fixedSize: MaterialStateProperty.all<Size>(
+              const Size(400, 80),
+            ),
+            backgroundColor: MaterialStateProperty.all<Color>(
+              Colors.white,
+            ),
+            side: MaterialStateProperty.all<BorderSide>(
+              const BorderSide(
+                color: Colors.grey,
+                width: 2.0,
+              ),
             ),
           ),
-        ),
-        onPressed: () {
-          //TODO BDD
-        },
-        child: const Image(image: AssetImage('images/fight.png')),
-      ),
+          onPressed: () {
+            //TODO BDD
+          },
+          child: Image.asset('assets/images/fight.png')),
     );
   }
 }

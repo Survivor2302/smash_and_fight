@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:smash_and_fight/helper/boxes.dart';
+import 'package:smash_and_fight/helper/utils.dart';
 import 'package:smash_and_fight/model/user.dart';
 import '../model/robot.dart';
 
@@ -6,11 +9,15 @@ class RobotViewModel extends ChangeNotifier {
   Robot? _currentRobot;
   Robot? _nextRobot;
   User? _user;
+  User? _ia;
+  List<User> _opponents = <User>[];
 
   RobotViewModel._internal() {
     _currentRobot = null;
     _nextRobot = null;
     _user = null;
+    _ia = null;
+    _opponents = <User>[];
   }
 
   static final RobotViewModel _singleton = RobotViewModel._internal();
@@ -30,7 +37,7 @@ class RobotViewModel extends ChangeNotifier {
 
   set nextRobot(Robot? robot) {
     _nextRobot = robot;
-    debugPrint("next robot: ${_nextRobot?.name}");
+    debugPrint("next robots: ${_nextRobot?.name}");
   }
 
   User? get user => _user;
@@ -39,19 +46,42 @@ class RobotViewModel extends ChangeNotifier {
     _user = user;
   }
 
+  User? get ia => _ia;
+
+  set ia(User? ia) {
+    _ia = ia;
+  }
+
+  List<User> get opponents => _opponents;
+
+  set opponents(List<User> opponents) {
+    _opponents = opponents;
+  }
+
   //add robot to user
-  void addRobot(Robot robot) {
+  Future<void> addRobot(Robot robot) async {
     _user?.robots.add(robot);
 
     if (_user?.robots.length == 3) {
       debugPrint("team: ${_user?.name}");
-      _user?.robots.forEach((element) {
-        debugPrint("robot: ${element.name}");
-        notifyListeners(); // Notifier les écouteurs que la condition est remplie
+      boxUser.add(_user!);
+      //print box content
+      boxUser.values.forEach((element) {
+        debugPrint("user: ${element.name}");
       });
+      notifyListeners(); // Notifier les écouteurs que la condition est remplie
     }
   }
- 
 
+  Future<List<User>?> generateOpponents() async {
+    _opponents.clear();
+    _opponents.add(await generateRandomOpponent());
+    boxUser.values.forEach((element) {
+      if (element.name != _user?.name) {
+        _opponents.add(element);
+      }
+    });
 
+    return _opponents;
+  }
 }

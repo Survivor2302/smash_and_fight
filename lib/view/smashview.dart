@@ -6,7 +6,7 @@ import 'package:smash_and_fight/view/widget/opponentlistwidget.dart';
 import 'package:smash_and_fight/view/widget/propositionwidget.dart';
 import 'package:smash_and_fight/view/widget/teamwidget.dart';
 import 'package:smash_and_fight/view/widget/swipeWidget.dart';
-import 'package:smash_and_fight/viewmodel/robotviewmodel.dart';
+import 'package:smash_and_fight/viewmodel/RobotViewModel.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
@@ -45,7 +45,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint('build');
     return Scaffold(
       appBar: AppBar(
         title: Padding(
