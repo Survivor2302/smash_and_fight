@@ -66,6 +66,7 @@ class _UsernameInputPageState extends State<UsernameInputPage> {
             ElevatedButton(
               onPressed: () {
                 var exists = false;
+                robotViewModel.user?.robots.clear();
                 boxUser.values.forEach((element) {
                   if (element.name == _usernameController.text) {
                     element.robots.forEach((robot) {
