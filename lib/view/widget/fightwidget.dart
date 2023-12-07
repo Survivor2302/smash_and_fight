@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smash_and_fight/viewmodel/RobotViewModel.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class FightWidget extends StatefulWidget {
   FightWidget();
@@ -41,8 +42,28 @@ class _FightWidgetState extends State<FightWidget> {
             ),
           ),
           onPressed: () {
-            //TODO fight function
-            robotViewModel.fight();
+            if (robotViewModel.opponent == null) {
+              Fluttertoast.showToast(
+                msg: "Please select an opponent",
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIosWeb: 1,
+                backgroundColor: Colors.grey,
+                textColor: Colors.white,
+                fontSize: 16.0,
+              );
+
+              debugPrint('no opponent selected');
+              return;
+            }
+            var isUserWinner = robotViewModel.fight();
+            if (isUserWinner) {
+              //TODO: show popup win
+              debugPrint('user win');
+            } else {
+              //TODO: show popup loose
+              debugPrint('user loose');
+            }
           },
           child: Image.asset('assets/images/fight.png')),
     );

@@ -60,8 +60,6 @@ class _OpponentListWidgetState extends State<OpponentListWidget> {
                               onTap: () {
                                 selectedOpponentIndex.value = index;
                                 robotViewModel.opponent = opponents[index];
-                                debugPrint(
-                                    'Opponent selected: ${opponents[index].name}');
                               },
                               child: Card(
                                 clipBehavior: Clip.antiAlias,
@@ -105,7 +103,12 @@ class _OpponentListWidgetState extends State<OpponentListWidget> {
                                             (opponents[index].name == 'IA')
                                                 ? GestureDetector(
                                                     onTap: () {
-                                                      setState(() {});
+                                                      setState(() {
+                                                        selectedOpponentIndex
+                                                            .value = -1;
+                                                        robotViewModel
+                                                            .opponent = null;
+                                                      });
                                                     },
                                                     child: const Icon(
                                                       Icons.replay_rounded,

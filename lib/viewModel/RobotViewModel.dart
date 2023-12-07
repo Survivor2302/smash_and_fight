@@ -84,9 +84,9 @@ class RobotViewModel extends ChangeNotifier {
     return _opponents;
   }
 
-  void fight() {
+  bool fight() {
     if (_user != null && _opponent != null) {
-      debugPrint("fighting...");
+      // debugPrint("fighting...");
       int userRobotIndex = 0;
       int opponentRobotIndex = 0;
 
@@ -100,7 +100,7 @@ class RobotViewModel extends ChangeNotifier {
               _opponent!.robots[opponentRobotIndex].speed) {
             opponentRobotPv -= _user!.robots[userRobotIndex].attack;
             if (opponentRobotPv <= 0) {
-              debugPrint("user's robot win the fight");
+              // debugPrint("user's robot win the fight");
               opponentRobotIndex++;
               if (opponentRobotIndex >= _opponent!.robots.length) break;
               opponentRobotPv = _opponent!.robots[opponentRobotIndex]
@@ -108,7 +108,7 @@ class RobotViewModel extends ChangeNotifier {
             } else {
               userRobotPv -= _opponent!.robots[opponentRobotIndex].attack;
               if (userRobotPv <= 0) {
-                debugPrint("opponent's robot win the fight");
+                // debugPrint("opponent's robot win the fight");
                 userRobotIndex++;
                 if (userRobotIndex >= _user!.robots.length) break;
                 userRobotPv = _user!.robots[userRobotIndex]
@@ -118,7 +118,7 @@ class RobotViewModel extends ChangeNotifier {
           } else {
             userRobotPv -= _opponent!.robots[opponentRobotIndex].attack;
             if (userRobotPv <= 0) {
-              debugPrint("opponent's robot win the fight");
+              // debugPrint("opponent's robot win the fight");
               userRobotIndex++;
               if (userRobotIndex >= _user!.robots.length) break;
               userRobotPv = _user!.robots[userRobotIndex]
@@ -126,7 +126,7 @@ class RobotViewModel extends ChangeNotifier {
             } else {
               opponentRobotPv -= _user!.robots[userRobotIndex].attack;
               if (opponentRobotPv <= 0) {
-                debugPrint("user's robot win the fight");
+                // debugPrint("user's robot win the fight");
                 opponentRobotIndex++;
                 if (opponentRobotIndex >= _opponent!.robots.length) break;
                 opponentRobotPv = _opponent!.robots[opponentRobotIndex]
@@ -138,12 +138,11 @@ class RobotViewModel extends ChangeNotifier {
       }
 
       if (userRobotIndex < _user!.robots.length) {
-        debugPrint("user wins the battle");
+        return true;
       } else {
-        debugPrint("opponent wins the battle");
+        return false;
       }
-
-      notifyListeners();
     }
+    return false;
   }
 }
