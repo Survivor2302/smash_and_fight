@@ -31,7 +31,7 @@ Future<Robot> getRandomRobot() async {
       sentence: await getRandomSentence(),
       attack: Random().nextInt(100),
       pv: Random().nextInt(100),
-      armor: Random().nextInt(100),
+      speed: Random().nextInt(100),
       imageUrl: 'https://robohash.org/$name');
 }
 

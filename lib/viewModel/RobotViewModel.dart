@@ -29,14 +29,14 @@ class RobotViewModel extends ChangeNotifier {
 
   set currentRobot(Robot? robot) {
     _currentRobot = robot;
-    debugPrint("current robot: ${_currentRobot?.name}");
+    //debugPrint("current robot: ${_currentRobot?.name}");
   }
 
   Robot? get nextRobot => _nextRobot;
 
   set nextRobot(Robot? robot) {
     _nextRobot = robot;
-    debugPrint("next robots: ${_nextRobot?.name}");
+    //debugPrint("next robots: ${_nextRobot?.name}");
   }
 
   User? get user => _user;
@@ -62,11 +62,11 @@ class RobotViewModel extends ChangeNotifier {
     _user?.robots.add(robot);
 
     if (_user?.robots.length == 3) {
-      debugPrint("team: ${_user?.name}");
+      //debugPrint("team: ${_user?.name}");
       boxUser.add(_user!);
       //print box content
       boxUser.values.forEach((element) {
-        debugPrint("user: ${element.name}");
+        //debugPrint("user: ${element.name}");
       });
       notifyListeners(); // Notifier les écouteurs que la condition est remplie
     }
@@ -87,31 +87,62 @@ class RobotViewModel extends ChangeNotifier {
   void fight() {
     if (_user != null && _opponent != null) {
       debugPrint("fighting...");
-      for (int i = 0; i < 3; i++) {
-        if (_user!.robots[i].speed > _opponent!.robots[i].speed) {
-          while (_user!.robots[i].pv > 0 && _opponent!.robots[i].pv > 0) {
-            _opponent!.robots[i].pv -= _user!.robots[i].attack;
-            _user!.robots[i].pv -= _opponent!.robots[i].attack;
-            //log who wins
-          }
-          if (_user!.robots[i].pv > _opponent!.robots[i].pv) {
-            debugPrint("user win the $i fight");
+      int userRobotIndex = 0;
+      int opponentRobotIndex = 0;
+
+      while (userRobotIndex < _user!.robots.length &&
+          opponentRobotIndex < _opponent!.robots.length) {
+        int userRobotPv = _user!.robots[userRobotIndex].pv;
+        int opponentRobotPv = _opponent!.robots[opponentRobotIndex].pv;
+
+        while (userRobotPv > 0 && opponentRobotPv > 0) {
+          if (_user!.robots[userRobotIndex].speed >
+              _opponent!.robots[opponentRobotIndex].speed) {
+            opponentRobotPv -= _user!.robots[userRobotIndex].attack;
+            if (opponentRobotPv <= 0) {
+              debugPrint("user's robot win the fight");
+              opponentRobotIndex++;
+              if (opponentRobotIndex >= _opponent!.robots.length) break;
+              opponentRobotPv = _opponent!.robots[opponentRobotIndex]
+                  .pv; // reset opponent's robot pv for next fight
+            } else {
+              userRobotPv -= _opponent!.robots[opponentRobotIndex].attack;
+              if (userRobotPv <= 0) {
+                debugPrint("opponent's robot win the fight");
+                userRobotIndex++;
+                if (userRobotIndex >= _user!.robots.length) break;
+                userRobotPv = _user!.robots[userRobotIndex]
+                    .pv; // reset user's robot pv for next fight
+              }
+            }
           } else {
-            debugPrint("opponent win the $i fight");
-          }
-        } else {
-          while (_user!.robots[i].pv > 0 && _opponent!.robots[i].pv > 0) {
-            _user!.robots[i].pv -= _opponent!.robots[i].attack;
-            _opponent!.robots[i].pv -= _user!.robots[i].attack;
-            //log who wins
-          }
-          if (_user!.robots[i].pv > _opponent!.robots[i].pv) {
-            debugPrint("user win the $i fight");
-          } else {
-            debugPrint("opponent win the $i fight");
+            userRobotPv -= _opponent!.robots[opponentRobotIndex].attack;
+            if (userRobotPv <= 0) {
+              debugPrint("opponent's robot win the fight");
+              userRobotIndex++;
+              if (userRobotIndex >= _user!.robots.length) break;
+              userRobotPv = _user!.robots[userRobotIndex]
+                  .pv; // reset user's robot pv for next fight
+            } else {
+              opponentRobotPv -= _user!.robots[userRobotIndex].attack;
+              if (opponentRobotPv <= 0) {
+                debugPrint("user's robot win the fight");
+                opponentRobotIndex++;
+                if (opponentRobotIndex >= _opponent!.robots.length) break;
+                opponentRobotPv = _opponent!.robots[opponentRobotIndex]
+                    .pv; // reset opponent's robot pv for next fight
+              }
+            }
           }
         }
       }
+
+      if (userRobotIndex < _user!.robots.length) {
+        debugPrint("user wins the battle");
+      } else {
+        debugPrint("opponent wins the battle");
+      }
+
       notifyListeners();
     }
   }
