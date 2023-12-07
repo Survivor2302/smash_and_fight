@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:smash_and_fight/helper/boxes.dart';
 import 'package:smash_and_fight/model/user.dart';
 import 'package:smash_and_fight/viewmodel/RobotViewModel.dart';
 
@@ -118,12 +119,15 @@ class _OpponentListWidgetState extends State<OpponentListWidget> {
                                                 : GestureDetector(
                                                     onTap: () {
                                                       setState(() {
-                                                        //TODO: delete opponent
+                                                        boxUser.deleteAt(boxUser
+                                                            .values
+                                                            .toList()
+                                                            .indexOf(opponents[
+                                                                index]));
                                                       });
                                                     },
                                                     child: const Icon(
-                                                      Icons
-                                                          .delete, // Remplacez par l'icône que vous voulez utiliser
+                                                      Icons.delete,
                                                       color: Colors.red,
                                                     ),
                                                   ),
