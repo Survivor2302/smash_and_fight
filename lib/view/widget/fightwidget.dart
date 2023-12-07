@@ -58,11 +58,26 @@ class _FightWidgetState extends State<FightWidget> {
             }
             var isUserWinner = robotViewModel.fight();
             if (isUserWinner) {
-              //TODO: show popup win
-              debugPrint('user win');
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: Text('Bravo :)'),
+                    content: Text('Tu as gagné !'),
+                    
+                  );
+                },
+              );
             } else {
-              //TODO: show popup loose
-              debugPrint('user loose');
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: Text('Quel dommage :/'),
+                    content: Text('Tu as perdu, essaie encore!'),
+                  );
+                },
+              );
             }
           },
           child: Image.asset('assets/images/fight.png')),
