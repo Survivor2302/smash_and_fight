@@ -1,16 +1,15 @@
 # smash_and_fight
 
-A new Flutter project.
+Bienvenue dans smash_and_fight, une application Flutter passionnante qui vous permet de créer votre propre compte, de sélectionner trois robots parmi une variété de choix, et de les utiliser pour combattre d'autres utilisateurs de l'application ou même l'ordinateur.
 
-## Getting Started
+## Fonctionnalités
 
-This project is a starting point for a Flutter application.
+- Création de compte : Les utilisateurs peuvent créer leur propre compte pour accéder à l'application.
+- Sélection de robots : Choisissez parmi une sélection de robots pour former votre équipe de combat.
+- Combats : Affrontez d'autres utilisateurs de l'application ou défiez l'ordinateur dans des combats palpitants.
 
-A few resources to get you started if this is your first Flutter project:
+## Architecture MVVM
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Ce projet est conçu en utilisant l'architecture MVVM (Model-View-ViewModel) pour assurer une séparation claire des responsabilités et une organisation modulaire du code. L'architecture MVVM permet de gérer efficacement la logique métier, l'interface utilisateur et la gestion des données.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Nous espérons que vous apprécierez l'expérience de jeu offerte par smash_and_fight !
