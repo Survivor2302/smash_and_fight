@@ -82,14 +82,14 @@ class _OpponentListWidgetState extends State<OpponentListWidget> {
                                     ),
                                   ),
                                   child: Container(
-                                    height: 150,
+                                    height: 120,
                                     width:
                                         MediaQuery.of(context).size.width / 2,
                                     padding: const EdgeInsets.all(8),
                                     color: Colors.transparent,
                                     child: Column(
                                       mainAxisAlignment:
-                                          MainAxisAlignment.center,
+                                          MainAxisAlignment.spaceEvenly,
                                       children: [
                                         Row(
                                           mainAxisAlignment:
