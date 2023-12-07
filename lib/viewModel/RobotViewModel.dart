@@ -8,14 +8,14 @@ class RobotViewModel extends ChangeNotifier {
   Robot? _currentRobot;
   Robot? _nextRobot;
   User? _user;
-  User? _ia;
+  User? _opponent;
   List<User> _opponents = <User>[];
 
   RobotViewModel._internal() {
     _currentRobot = null;
     _nextRobot = null;
     _user = null;
-    _ia = null;
+    _opponent = null;
     _opponents = <User>[];
   }
 
@@ -45,10 +45,10 @@ class RobotViewModel extends ChangeNotifier {
     _user = user;
   }
 
-  User? get ia => _ia;
+  User? get opponent => _opponent;
 
-  set ia(User? ia) {
-    _ia = ia;
+  set opponent(User? opponent) {
+    _opponent = opponent;
   }
 
   List<User> get opponents => _opponents;
@@ -82,5 +82,37 @@ class RobotViewModel extends ChangeNotifier {
     });
 
     return _opponents;
+  }
+
+  void fight() {
+    if (_user != null && _opponent != null) {
+      debugPrint("fighting...");
+      for (int i = 0; i < 3; i++) {
+        if (_user!.robots[i].speed > _opponent!.robots[i].speed) {
+          while (_user!.robots[i].pv > 0 && _opponent!.robots[i].pv > 0) {
+            _opponent!.robots[i].pv -= _user!.robots[i].attack;
+            _user!.robots[i].pv -= _opponent!.robots[i].attack;
+            //log who wins
+          }
+          if (_user!.robots[i].pv > _opponent!.robots[i].pv) {
+            debugPrint("user win the $i fight");
+          } else {
+            debugPrint("opponent win the $i fight");
+          }
+        } else {
+          while (_user!.robots[i].pv > 0 && _opponent!.robots[i].pv > 0) {
+            _user!.robots[i].pv -= _opponent!.robots[i].attack;
+            _opponent!.robots[i].pv -= _user!.robots[i].attack;
+            //log who wins
+          }
+          if (_user!.robots[i].pv > _opponent!.robots[i].pv) {
+            debugPrint("user win the $i fight");
+          } else {
+            debugPrint("opponent win the $i fight");
+          }
+        }
+      }
+      notifyListeners();
+    }
   }
 }

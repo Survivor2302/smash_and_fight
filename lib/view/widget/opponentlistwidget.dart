@@ -59,6 +59,9 @@ class _OpponentListWidgetState extends State<OpponentListWidget> {
                             return GestureDetector(
                               onTap: () {
                                 selectedOpponentIndex.value = index;
+                                robotViewModel.opponent = opponents[index];
+                                debugPrint(
+                                    'Opponent selected: ${opponents[index].name}');
                               },
                               child: Card(
                                 clipBehavior: Clip.antiAlias,

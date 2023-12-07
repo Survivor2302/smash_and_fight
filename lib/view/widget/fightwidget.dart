@@ -42,6 +42,7 @@ class _FightWidgetState extends State<FightWidget> {
           ),
           onPressed: () {
             //TODO fight function
+            robotViewModel.fight();
           },
           child: Image.asset('assets/images/fight.png')),
     );

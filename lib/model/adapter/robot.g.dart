@@ -21,7 +21,7 @@ class RobotAdapter extends TypeAdapter<Robot> {
       sentence: fields[1] as String,
       attack: fields[2] as int,
       pv: fields[3] as int,
-      armor: fields[4] as int,
+      speed: fields[4] as int,
       imageUrl: fields[5] as String,
     );
   }
@@ -39,7 +39,7 @@ class RobotAdapter extends TypeAdapter<Robot> {
       ..writeByte(3)
       ..write(obj.pv)
       ..writeByte(4)
-      ..write(obj.armor)
+      ..write(obj.speed)
       ..writeByte(5)
       ..write(obj.imageUrl);
   }

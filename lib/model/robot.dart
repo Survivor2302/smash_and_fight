@@ -13,7 +13,7 @@ class Robot {
   @HiveField(3)
   int pv;
   @HiveField(4)
-  int armor;
+  int speed;
   @HiveField(5)
   late String imageUrl; // Mark the field as 'late'
 
@@ -22,6 +22,6 @@ class Robot {
       required this.sentence,
       required this.attack,
       required this.pv,
-      required this.armor,
+      required this.speed,
       required this.imageUrl}); // Add a generative constructor
 }
