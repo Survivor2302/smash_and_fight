@@ -68,8 +68,7 @@ class _UsernameInputPageState extends State<UsernameInputPage> {
                 var exists = false;
                 boxUser.values.forEach((element) {
                   if (element.name == _usernameController.text) {
-                    robotViewModel.user = User(name: element.name);
-                    robotViewModel.user!.robots = element.robots;
+                    robotViewModel.user = element;
                     exists = true;
                   }
                 });
