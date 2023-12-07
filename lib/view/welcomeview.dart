@@ -68,10 +68,8 @@ class _UsernameInputPageState extends State<UsernameInputPage> {
                 var exists = false;
                 boxUser.values.forEach((element) {
                   if (element.name == _usernameController.text) {
-                    element.robots.forEach((robot) {
-                      robotViewModel.addRobot(robot);
-                    });
-                    robotViewModel.user = element;
+                    robotViewModel.user = User(name: element.name);
+                    robotViewModel.user!.robots = element.robots;
                     exists = true;
                   }
                 });
@@ -89,7 +87,7 @@ class _UsernameInputPageState extends State<UsernameInputPage> {
                   ),
                 );
               },
-              child: Text(
+              child: const Text(
                 'Valider',
                 style: TextStyle(
                   color: Colors.black,
