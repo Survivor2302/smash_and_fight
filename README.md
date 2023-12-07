@@ -12,4 +12,8 @@ Bienvenue dans smash_and_fight, une application Flutter passionnante qui vous pe
 
 Ce projet est conçu en utilisant l'architecture MVVM (Model-View-ViewModel) pour assurer une séparation claire des responsabilités et une organisation modulaire du code. L'architecture MVVM permet de gérer efficacement la logique métier, l'interface utilisateur et la gestion des données.
 
+## Base de données Hive
+
+Nous utilisons Hive, une base de données NoSQL rapide et légère, pour stocker les données de manière efficace et réactive, offrant ainsi une expérience utilisateur fluide et réactive.
+
 Nous espérons que vous apprécierez l'expérience de jeu offerte par smash_and_fight !
